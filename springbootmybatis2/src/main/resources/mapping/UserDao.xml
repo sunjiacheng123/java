@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--映射配置文件-->
+<mapper namespace="com.dao.UserDao">
+    <!--配置查询所有-->
+    <select id="findAll" resultType="com.domain.User">
+        select * from user
+    </select>
+    <!--插入用户-->
+    <insert id="insertUser" parameterType="com.domain.User" >
+        <!--返回插入用户的id-->
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            select last_insert_id();
+        </selectKey>
+        insert into user(name,id,age,sex) value(#{name},#{id},#{age},#{sex})
+    </insert>
+    <!--删除用户-->
+    <delete id="deleteId" parameterType="Integer">
+        delete from user
+            where id=#{id}
+    </delete>
+    <!--根据id查询用户-->
+    <select id="findId" parameterType="Integer" resultType="com.domain.User">
+        select * from user where id=#{id}
+    </select>
+    <!--更新用户-->
+    <update id="updateUser" parameterType="com.domain.User">
+        update user set name =#{name},age =#{age},sex =#{sex}
+            where id=#{id}
+    </update>
+</mapper>
